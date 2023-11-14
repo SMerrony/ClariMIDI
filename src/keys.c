@@ -62,14 +62,14 @@ static keydef_t keys[] = {
 void keys_setup() {
 
     // // I2C for the MPR121
-    // i2c_init(I2C_PORT, MPR121_I2C_FREQ);
-    // gpio_set_function(I2C_SDA, GPIO_FUNC_I2C);
-    // gpio_set_function(I2C_SCL, GPIO_FUNC_I2C);
-    // gpio_pull_up(I2C_SDA);
-    // gpio_pull_up(I2C_SCL);
+    // i2c_init(MPR121_I2C_PORT, MPR121_I2C_FREQ);
+    // gpio_set_function(MPR121_I2C_SDA, GPIO_FUNC_I2C);
+    // gpio_set_function(MPR121_I2C_SCL, GPIO_FUNC_I2C);
+    // gpio_pull_up(MPR121_I2C_SDA);
+    // gpio_pull_up(MPR121_I2C_SCL);
 
     // // MPR121
-    // mpr121_init(I2C_PORT, MPR121_ADDR, &mpr121);
+    // mpr121_init(MPR121_I2C_PORT, MPR121_ADDR, &mpr121);
     // mpr121_set_thresholds(MPR121_TOUCH_THRESHOLD, MPR121_RELEASE_THRESHOLD, &mpr121);
     // for (int s = 0; s < MPR121_SENSORS; s++){
     //     touchmap[s] = UNUSED_SENSOR;

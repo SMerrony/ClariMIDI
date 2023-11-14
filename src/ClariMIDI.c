@@ -7,7 +7,6 @@
 
 #include "bsp/board.h"
 // #include "hardware/clocks.h"
-// #include "hardware/uart.h"
 #include "pico/stdlib.h"
 #include "tusb.h"
 
@@ -41,16 +40,11 @@ int main() {
 
     uint8_t transpose = DEFAULT_TRANSPOSE;
 
-    // gpio_set_function(16, GPIO_FUNC_UART); //TX
-    // gpio_set_function(17, GPIO_FUNC_UART); //RX
     board_init();
 
     
     tud_init(BOARD_TUD_RHPORT);
   
-    // stdio_init_all();
-    // printf("DEBUG: USB TUD Init done\n");
-
     display_setup();
 
     keys_setup();
@@ -60,7 +54,6 @@ int main() {
     midi_setup(transpose);
 
     display_error("Setup complete", false);
-    // printf("DEBUG: Setup complete\n");
 
     uint8_t curr_breath = 0;
     uint8_t last_breath = 0;
@@ -69,7 +62,7 @@ int main() {
 
     uint32_t keys;
 
-    // char debug[10];
+    char debug_msg[80]; // just a convenience while debugging
     
     while (true) {
 
@@ -89,7 +82,7 @@ int main() {
                 }
             }
             last_breath = curr_breath;
-            // printf("DEBUG: Breath set to %d\n", last_breath);
+            sprintf(debug_msg, "Breath set to %d\n", last_breath);
         }
         
         keys = read_keys();
@@ -100,9 +93,8 @@ int main() {
                 break;
             case MENU_DOWN:         // These two are meaningless unless we are inside the menu
             case MENU_SELECT:
-                break;
             case UNKNOWN_FINGERING:
-                // printf("DEBUG: Unknown fingering: %s\n", int2bin(keys, NULL));
+                sprintf(debug_msg, "Unknown fingering: %s\n", int2bin(keys, NULL));
                 break;
             default:
                 if (midi_note != last_midi_note) {
@@ -110,14 +102,10 @@ int main() {
                     if (last_breath > 0) {
                         start_note(midi_note, last_breath);
                     }
-                    // sprintf(debug, "%d", midi_note);
-                    // display_message(debug);
                     last_midi_note = midi_note;
-                    // printf("DEBUG: Last_note set to: %d\n", last_midi_note);
+                    sprintf(debug_msg, "Last_note set to: %d\n", last_midi_note);
                 }
-
         }
-
     }
 
     return -1; // should never happen

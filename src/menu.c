@@ -23,6 +23,7 @@ void menu_wait(uint32_t ms) {
 uint8_t get_menu_key() {
     uint8_t key;
     while (true) {
+        menu_wait(20);
         key = decode_keys(read_keys());
         switch (key) {
             case ENTER_MENU:

@@ -12,14 +12,14 @@
 ssd1306_t disp;
 
 void display_setup() {
-    i2c_init(i2c0, 200000);
-    gpio_set_function(I2C_0, GPIO_FUNC_I2C);
-    gpio_set_function(I2C_1, GPIO_FUNC_I2C);
-    gpio_pull_up(I2C_0);
-    gpio_pull_up(I2C_1);
+    i2c_init(DISPLAY_I2C_PORT, 200000);
+    gpio_set_function(DISPLAY_I2C_0, GPIO_FUNC_I2C);
+    gpio_set_function(DISPLAY_I2C_1, GPIO_FUNC_I2C);
+    gpio_pull_up(DISPLAY_I2C_0);
+    gpio_pull_up(DISPLAY_I2C_1);
 
     disp.external_vcc = false;
-    ssd1306_init(&disp, WIDTH, HEIGHT, 0x3C, i2c0);
+    ssd1306_init(&disp, WIDTH, HEIGHT, 0x3C, DISPLAY_I2C_PORT);
     ssd1306_clear(&disp);
 
     ssd1306_draw_string(&disp, 10, 10, 2, APP_NAME);

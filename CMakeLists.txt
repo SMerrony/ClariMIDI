@@ -40,6 +40,7 @@ add_executable(ClariMIDI
 pico_set_program_name(ClariMIDI "ClariMIDI")
 pico_set_program_version(ClariMIDI "0.0.3")
 
+# I could not get the UART to run stably alongside MIDI USB...
 pico_enable_stdio_uart(ClariMIDI 0) # enable for UART stdio messages
 pico_enable_stdio_usb(ClariMIDI 0)  # do not enable for this project!
 
