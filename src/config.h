@@ -47,8 +47,8 @@
 #define MPR121_I2C_FREQ 100000
 
 // Touch and release thresholds
-#define MPR121_TOUCH_THRESHOLD   16
-#define MPR121_RELEASE_THRESHOLD 10
+#define MPR121_TOUCH_THRESHOLD   127
+#define MPR121_RELEASE_THRESHOLD 16
 
 #define MPR121_SENSORS 12 // max. the board can handle
 #define UNUSED_SENSOR  99 // dummy val to indicate unused sensor

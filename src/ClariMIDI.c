@@ -41,7 +41,6 @@ int main() {
     uint8_t transpose = DEFAULT_TRANSPOSE;
 
     board_init();
-
     
     tud_init(BOARD_TUD_RHPORT);
   
@@ -95,15 +94,17 @@ int main() {
             case MENU_SELECT:
             case UNKNOWN_FINGERING:
                 sprintf(debug_msg, "Unknown fingering: %s\n", int2bin(keys, NULL));
+                display_message(debug_msg);
                 break;
             default:
                 if (midi_note != last_midi_note) {
                     stop_current_note();
-                    if (last_breath > 0) {
+                    // if (last_breath > 0) {
                         start_note(midi_note, last_breath);
-                    }
+                    // }
                     last_midi_note = midi_note;
                     sprintf(debug_msg, "Last_note set to: %d\n", last_midi_note);
+                    display_message(debug_msg);
                 }
         }
     }

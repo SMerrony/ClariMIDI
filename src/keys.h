@@ -9,8 +9,8 @@
 #include <stdbool.h>
 
 typedef struct {
-    int pin;    // GPIO for switches, # for MPR121
-    bool touch; // true if a touch key, else a switch
+    int pin;    // GPIO for switches, pin # for MPR121
+    bool touch; // true if a touch key, else it's a switch
     uint threshold;
 } keydef_t;
 

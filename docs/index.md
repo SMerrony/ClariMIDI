@@ -50,10 +50,11 @@ The FreeCAD designs and .3mf models are in the `3D` directory.
 * 18 x silent keyswitches
 * 2.4cm (0.96") SSD1306 128x64 OLED display with I2C interface
 * CNY70 reflective optical sensor
+* MPR121 capacitative touch sensors I2C module (Adafruit type 1982 or equivalent)
 
 #### Hardware
 * White balloon (the softer the better)
-* Hook-up wire and Dupont cables
+* Hook-up wire and various Dupont cables
 * 7 x 'brass' drawing pins ("pushpins")
 * Superglue or equivalent
 * Hot glue gun

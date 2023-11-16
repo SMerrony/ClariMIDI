@@ -17,8 +17,8 @@ static struct mpr121_sensor mpr121;
 static int touchmap[MPR121_SENSORS]; // map MPR121 sensors to our key numbers
 
 static keydef_t keys[] = {
-    [0] = {15, false, 0},   // Register
-    [1] = {11, true,  0},   // Thumb
+    [0] = {15, false, 0},   // Register key
+    [1] = {11, true,  0},   // Thumb touchplate
     [2] = {14, false, 0},
     [3] = {13, false, 0},
     [4] = {10, true,  0},   // L1
@@ -61,19 +61,19 @@ static keydef_t keys[] = {
 
 void keys_setup() {
 
-    // // I2C for the MPR121
-    // i2c_init(MPR121_I2C_PORT, MPR121_I2C_FREQ);
-    // gpio_set_function(MPR121_I2C_SDA, GPIO_FUNC_I2C);
-    // gpio_set_function(MPR121_I2C_SCL, GPIO_FUNC_I2C);
-    // gpio_pull_up(MPR121_I2C_SDA);
-    // gpio_pull_up(MPR121_I2C_SCL);
+    // I2C for the MPR121
+    i2c_init(MPR121_I2C_PORT, MPR121_I2C_FREQ);
+    gpio_set_function(MPR121_I2C_SDA, GPIO_FUNC_I2C);
+    gpio_set_function(MPR121_I2C_SCL, GPIO_FUNC_I2C);
+    gpio_pull_up(MPR121_I2C_SDA);
+    gpio_pull_up(MPR121_I2C_SCL);
 
-    // // MPR121
-    // mpr121_init(MPR121_I2C_PORT, MPR121_ADDR, &mpr121);
-    // mpr121_set_thresholds(MPR121_TOUCH_THRESHOLD, MPR121_RELEASE_THRESHOLD, &mpr121);
-    // for (int s = 0; s < MPR121_SENSORS; s++){
-    //     touchmap[s] = UNUSED_SENSOR;
-    // }
+    // MPR121
+    mpr121_init(MPR121_I2C_PORT, MPR121_ADDR, &mpr121);
+    mpr121_set_thresholds(MPR121_TOUCH_THRESHOLD, MPR121_RELEASE_THRESHOLD, &mpr121);
+    for (int s = 0; s < MPR121_SENSORS; s++){
+        touchmap[s] = UNUSED_SENSOR;
+    }
 
     for (int k = 0; k <= LAST_KEY; k++) {
         if (keys[k].touch) {
@@ -102,13 +102,6 @@ void keys_setup() {
 uint32_t read_touches() {
     uint32_t state = 0;
     uint16_t touched;
-    // for (int k = 0; k <= LAST_KEY; k++) {
-    //     if (keys[k].touch) {
-    //         if (read_touch(k)) {
-    //             state |= (1<<k);
-    //         }
-    //     }
-    // }
     mpr121_touched(&touched, &mpr121);
     for (int s = 0; s < MPR121_SENSORS; s++) {
         if (touchmap[s] != UNUSED_SENSOR) {
@@ -136,8 +129,8 @@ uint32_t read_switches() {
 }
 
 uint32_t read_keys() {
-    // return read_touches() | read_switches();
-    return read_switches();
+    return read_touches() | read_switches();
+    // return read_switches();
 }
 
 uint8_t decode_keys(uint32_t keys) {

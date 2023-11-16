@@ -1,3 +1,4 @@
 /.vscode
 /build
 wifi_config.h   # just in case
+*#
