@@ -42,23 +42,6 @@ static keydef_t keys[] = {
 
 #define LAST_KEY 20
 
-// uint get_raw_value(uint pin) {
-//     uint ticks = 0;
-//     for (uint i = 0; i < TOUCH_SAMPLES; i++) {
-//         gpio_set_dir(pin, GPIO_OUT);
-//         gpio_put(pin, true);
-//         busy_wait_us(10);
-//         gpio_set_dir(pin, GPIO_IN);
-//         while (gpio_get(pin)){
-//             if (ticks >= TOUCH_TIMEOUT_TICKS) {
-//                 return TOUCH_TIMEOUT_TICKS;
-//             }
-//             ticks++;
-//         }
-//     }
-//     return ticks;
-// }
-
 void keys_setup() {
 
     // I2C for the MPR121
@@ -78,13 +61,6 @@ void keys_setup() {
     for (int k = 0; k <= LAST_KEY; k++) {
         if (keys[k].touch) {
             touchmap[keys[k].pin] = k;
-            // gpio_disable_pulls(keys[k].pin);
-            // uint v = get_raw_value(keys[k].pin);
-            // if (v == TOUCH_TIMEOUT_TICKS) {
-            //     display_error("Missing pulldown", true);
-            // } else {
-            //     keys[k].threshold = v + TOUCH_DEFAULT_THRESHOLD;
-            // }
         } else {
             gpio_init(keys[k].pin);
             gpio_set_dir(keys[k].pin, GPIO_IN);
@@ -95,18 +71,12 @@ void keys_setup() {
     }
 }
 
-// bool read_touch(int key) {
-//     return get_raw_value(keys[key].pin) > keys[key].threshold;
-// }
-
 uint32_t read_touches() {
     uint32_t state = 0;
     uint16_t touched;
     mpr121_touched(&touched, &mpr121);
     for (int s = 0; s < MPR121_SENSORS; s++) {
         if (touchmap[s] != UNUSED_SENSOR) {
-            // touch_bit = 1 << s;
-            // key_bit = 1 << touchmap[s];
             if ((touched & (1 << s)) != 0) {
                 state |= (1 << touchmap[s]);
             }
@@ -130,7 +100,6 @@ uint32_t read_switches() {
 
 uint32_t read_keys() {
     return read_touches() | read_switches();
-    // return read_switches();
 }
 
 uint8_t decode_keys(uint32_t keys) {

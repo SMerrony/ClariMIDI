@@ -41,17 +41,11 @@ int main() {
     uint8_t transpose = DEFAULT_TRANSPOSE;
 
     board_init();
-    
     tud_init(BOARD_TUD_RHPORT);
-  
     display_setup();
-
     keys_setup();
-
     breath_setup();
-
     midi_setup(transpose);
-
     display_error("Setup complete", false);
 
     uint8_t curr_breath = 0;
@@ -61,7 +55,9 @@ int main() {
 
     uint32_t keys;
 
+    #ifdef VERBOSE
     char debug_msg[80]; // just a convenience while debugging
+    #endif
     
     while (true) {
 
@@ -81,7 +77,10 @@ int main() {
                 }
             }
             last_breath = curr_breath;
+            #ifdef VERBOSE
             sprintf(debug_msg, "Breath set to %d\n", last_breath);
+            display_message(debug_msg);
+            #endif
         }
         
         keys = read_keys();
@@ -93,18 +92,20 @@ int main() {
             case MENU_DOWN:         // These two are meaningless unless we are inside the menu
             case MENU_SELECT:
             case UNKNOWN_FINGERING:
+                #ifdef VERBOSE
                 sprintf(debug_msg, "Unknown fingering: %s\n", int2bin(keys, NULL));
                 display_message(debug_msg);
+                #endif
                 break;
             default:
                 if (midi_note != last_midi_note) {
                     stop_current_note();
-                    // if (last_breath > 0) {
-                        start_note(midi_note, last_breath);
-                    // }
+                    start_note(midi_note, last_breath);
                     last_midi_note = midi_note;
+                    #ifdef VERBOSE
                     sprintf(debug_msg, "Last_note set to: %d\n", last_midi_note);
                     display_message(debug_msg);
+                    #endif
                 }
         }
     }

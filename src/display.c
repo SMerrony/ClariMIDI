@@ -3,6 +3,8 @@
  * SPDX-License-Identifier: BSD-4-Clause-Shortened
  */
 
+// #include <stdio.h>
+
 #include "hardware/i2c.h"
 #include "pico/stdlib.h"
 
@@ -51,6 +53,7 @@ void display_message(char msg[]) {
     ssd1306_clear(&disp);
     ssd1306_draw_string(&disp, 0, 10, 1, msg);
     ssd1306_show(&disp);
+    // printf("DEBUG: %s\n", msg);
 }
 
 void display_string(uint32_t x, uint32_t y, uint32_t scale, const char *s) {

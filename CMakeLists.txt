@@ -1,4 +1,6 @@
-# Generated Cmake Pico project file
+# Generated then altered Cmake Pico project file
+
+set(PROJECT ClariMIDI)
 
 cmake_minimum_required(VERSION 3.13)
 
@@ -18,15 +20,15 @@ if (PICO_SDK_VERSION_STRING VERSION_LESS "1.4.0")
   message(FATAL_ERROR "Raspberry Pi Pico SDK version 1.4.0 (or later) required. Your version is ${PICO_SDK_VERSION_STRING}")
 endif()
 
-project(ClariMIDI C CXX ASM)
+project(${PROJECT} C CXX ASM)
 
 # Initialise the Raspberry Pi Pico SDK
 pico_sdk_init()
 
 # Add executable. Default name is the project name, version 0.1
 
-add_executable(ClariMIDI 
-  src/ClariMIDI.c
+add_executable(${PROJECT} 
+  src/${PROJECT}.c
   src/breath.c
   src/display.c
   src/keys.c
@@ -35,26 +37,27 @@ add_executable(ClariMIDI
   src/ssd1306.c
   src/usb_descriptors.c)
 
-# pico_generate_pio_header(ClariMIDI ${CMAKE_CURRENT_LIST_DIR}/touch.pio)
+# pico_generate_pio_header(${PROJECT} ${CMAKE_CURRENT_LIST_DIR}/touch.pio)
 
-pico_set_program_name(ClariMIDI "ClariMIDI")
-pico_set_program_version(ClariMIDI "0.0.3")
+pico_set_program_name(${PROJECT} "${PROJECT}")
+pico_set_program_version(${PROJECT} "0.0.4")
+
 
 # I could not get the UART to run stably alongside MIDI USB...
-pico_enable_stdio_uart(ClariMIDI 0) # enable for UART stdio messages
-pico_enable_stdio_usb(ClariMIDI 0)  # do not enable for this project!
-
-# target_compile_definitions(ClariMIDI PRIVATE
+# target_compile_definitions(${PROJECT} PRIVATE
+#   # PICO_DEFAULT_UART_BAUD_RATE=9600
 # 	PICO_DEFAULT_UART_TX_PIN=16
 # 	PICO_DEFAULT_UART_RX_PIN=17
 # )
+pico_enable_stdio_uart(${PROJECT} 0) # enable for UART stdio messages
+pico_enable_stdio_usb(${PROJECT} 0)  # do not enable for this project!
 
-# target_compile_options(ClariMIDI PRIVATE -Wall)
+# target_compile_options(${PROJECT} PRIVATE -Wall)
 
 add_subdirectory(../pico-mpr121/lib mpr121)
 
 # Add the standard library to the build
-target_link_libraries(ClariMIDI
+target_link_libraries(${PROJECT}
   hardware_adc
   hardware_i2c
   # pico_multicore
@@ -65,10 +68,10 @@ target_link_libraries(ClariMIDI
 )
 
 # Add the standard include files to the build
-target_include_directories(ClariMIDI PRIVATE
+target_include_directories(${PROJECT} PRIVATE
   ${CMAKE_CURRENT_LIST_DIR}
   ${CMAKE_CURRENT_LIST_DIR}/.. # for our common lwipopts or any other standard includes, if required
 )
 
-pico_add_extra_outputs(ClariMIDI)
+pico_add_extra_outputs(${PROJECT})
 

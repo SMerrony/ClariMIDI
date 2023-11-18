@@ -12,6 +12,8 @@
 #define APP_VERSION "v0.0.4"
 #define APP_AUTHOR "SMerrony"
 
+#define VERBOSE 1 // Display debugging info on OLED display
+
 // display
 #define DISPLAY_I2C_PORT i2c0
 #define DISPLAY_I2C_0 0
@@ -44,7 +46,7 @@
 #define MPR121_I2C_SDA 18
 #define MPR121_I2C_SCL 19
 #define MPR121_ADDR 0x5A
-#define MPR121_I2C_FREQ 100000
+#define MPR121_I2C_FREQ 100000 // max. is 400k according to MPR121 datasheet
 
 // Touch and release thresholds
 #define MPR121_TOUCH_THRESHOLD   127
