@@ -14,6 +14,8 @@
 
 #define VERBOSE 1 // Display debugging info on OLED display
 
+#define WATCHDOG_TIMEOUT_MS  3000 // max is ~4700
+
 // display
 #define DISPLAY_I2C_PORT i2c0
 #define DISPLAY_I2C_0 0
@@ -22,6 +24,7 @@
 #define HEIGHT 64
 #define SPLASH_MS 2000
 #define ERROR_TIMEOUT_MS 3000
+#define LINE_LEN 21
 
 // MIDI
 #define DEFAULT_CHANNEL 0

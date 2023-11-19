@@ -4,8 +4,10 @@
  */
 
 // #include <stdio.h>
+#include <string.h>
 
 #include "hardware/i2c.h"
+#include "hardware/watchdog.h"
 #include "pico/stdlib.h"
 
 #include "config.h"
@@ -40,11 +42,17 @@ void display_clear() {
 void display_error(char msg[], bool fatal) {
     ssd1306_clear(&disp);
     ssd1306_draw_string(&disp, 0, 10, 1, msg);
-    ssd1306_show(&disp);
-    if (fatal) {
-        
+    if (strlen(msg) > LINE_LEN) {
+        ssd1306_draw_string(&disp, 0, 20, 1, msg+LINE_LEN);
+        if (strlen(msg) > (LINE_LEN * 2)) {
+            ssd1306_draw_string(&disp, 0, 30, 1, msg+(LINE_LEN*2));
+        }
     }
+    ssd1306_show(&disp);
     sleep_ms(ERROR_TIMEOUT_MS);
+    if (fatal) {
+        watchdog_reboot(0, 0, 3000);
+    }
     ssd1306_clear(&disp);
     ssd1306_show(&disp);
 }
@@ -52,6 +60,12 @@ void display_error(char msg[], bool fatal) {
 void display_message(char msg[]) {
     ssd1306_clear(&disp);
     ssd1306_draw_string(&disp, 0, 10, 1, msg);
+    if (strlen(msg) > LINE_LEN) {
+        ssd1306_draw_string(&disp, 0, 20, 1, msg+LINE_LEN);
+        if (strlen(msg) > (LINE_LEN * 2)) {
+            ssd1306_draw_string(&disp, 0, 30, 1, msg+(LINE_LEN*2));
+        }
+    }
     ssd1306_show(&disp);
     // printf("DEBUG: %s\n", msg);
 }

@@ -7,6 +7,7 @@
 
 #include "bsp/board.h"
 // #include "hardware/clocks.h"
+#include "hardware/watchdog.h"
 #include "pico/stdlib.h"
 #include "tusb.h"
 
@@ -46,6 +47,9 @@ int main() {
     keys_setup();
     breath_setup();
     midi_setup(transpose);
+    if (watchdog_caused_reboot()) {
+        display_message("Rebooted due to Watchdog timeout");
+    }
     display_error("Setup complete", false);
 
     uint8_t curr_breath = 0;
@@ -58,8 +62,12 @@ int main() {
     #ifdef VERBOSE
     char debug_msg[80]; // just a convenience while debugging
     #endif
-    
+
+    watchdog_enable(WATCHDOG_TIMEOUT_MS, true);
+
     while (true) {
+
+        watchdog_update(); // feed the dog
 
         tud_task();
 
