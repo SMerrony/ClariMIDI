@@ -18,26 +18,26 @@ static int touchmap[MPR121_SENSORS]; // map MPR121 sensors to our key numbers
 
 static keydef_t keys[] = {
     [0] = {15, false, 0},   // Register key
-    [1] = {11, true,  0},   // Thumb touchplate
+    [1] = {2,  true,  0},   // Thumb touchplate
     [2] = {14, false, 0},
     [3] = {13, false, 0},
-    [4] = {10, true,  0},   // L1
-    [5] = {8,  true,  0},   // L2
+    [4] = {0,  true,  0},   // L1
+    [5] = {4,  true,  0},   // L2
     [6] = {12, false, 0},
     [7] = {6,  true,  0},   // L3
     [8] = {11, false, 0},
     [9] = {20, false, 0},
     [10] = {10, false, 0},
     [11] = {21, false, 0},
-    [12] = {4, true,  0},   // R1
-    [13] = {2, true,  0},   // R2
-    [14] = {8, false, 0},
-    [15] = {0, true,  0},   // R3
-    [16] = {6, false, 0},
-    [17] = {5, false, 0},
-    [18] = {4, false, 0},
-    [19] = {3, false, 0},
-    [20] = {2, false, 0}   // E-flat                                                                 
+    [12] = {8,  true,  0},   // R1
+    [13] = {10, true, 0},    // R2
+    [14] = {8,  false, 0},
+    [15] = {11, true, 0},    // R3
+    [16] = {6,  false, 0},
+    [17] = {5,  false, 0},
+    [18] = {4,  false, 0},
+    [19] = {3,  false, 0},
+    [20] = {2,  false, 0}    // E-flat                                                                 
 };
 
 #define LAST_KEY 20
